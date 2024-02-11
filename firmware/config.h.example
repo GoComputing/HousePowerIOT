@@ -1,0 +1,15 @@
+// WiFi access
+#define WIFI_SSID ""
+#define WIFI_PASSWORD ""
+
+// InfluxDB access
+#define INFLUXDB_URL ""
+#define INFLUXDB_TOKEN ""
+#define INFLUXDB_ORG ""
+#define INFLUXDB_BUCKET ""
+
+// Sensor configuration
+#define SENSOR_LOCATION ""
+
+// Other configuration
+#define TZ_INFO ""
