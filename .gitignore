@@ -2,3 +2,4 @@ firmware/config.h
 hardware/pcb/main_board/main_board-backups/
 hardware/pcb/libraries/
 hardware/pcb/main_board/~*
+hardware/pcb/main_board/fp-info-cache
