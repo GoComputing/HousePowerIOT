@@ -9,11 +9,16 @@
 
 #include <InfluxDbClient.h>
 #include <InfluxDbCloud.h>
+#include "EmonLib.h"   //https://github.com/openenergymonitor/EmonLib
 #include "config.h"
 
 
 InfluxDBClient client(INFLUXDB_URL, INFLUXDB_ORG, INFLUXDB_BUCKET, INFLUXDB_TOKEN);
 Point house_power_sensor("house_power");
+
+EnergyMonitor emon;
+float kWh = 0;
+unsigned long lastmillis = millis();
 
 
 void setup() {
@@ -44,15 +49,20 @@ void setup() {
     Serial.print("InfluxDB connection failed: ");
     Serial.println(client.getLastErrorMessage());
   }
+
+  // Sensor configuration
+  emon.voltage(35, vCalibration, 1.7); // Voltage: input pin, calibration, phase_shift
+  emon.current(34, currCalibration); // Current: input pin, calibration.
 }
 
 void loop() {
   house_power_sensor.clearFields();
 
   // Read sensor values
-  float voltage = random(300);
-  float intensity = random(200);
-  float power = random(500);
+  emon.calcVI(20, 2000);
+  float voltage = emon.Vrms;
+  float intensity = emon.Irms;
+  float power = emon.apparentPower;
 
   // Add values to InfluxDB point
   house_power_sensor.addField("voltage_V", voltage);
