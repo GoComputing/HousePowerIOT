@@ -1,0 +1,65 @@
+npm
+ - Node package manager (npm) is a package manager and a software register but it's also a place
+   where developers can find, build and manage code packages
+
+
+Node.js
+ - A single-threaded, open-source, cross-platform runtime environment for building fast and scalable
+   server-side and networking applications. It runs on the V8 JavaScript runtime engine, and it uses
+   event-driven, non-blocking I/O architecture, which makes it efficient and suitable for real-time
+   applications
+ - It is a server-side JavaScript runtime environment used for executing JavaScript code outside the
+   web browser. Node.js is primarily used for building server-side applications, APIs, and backend
+   services.
+ - Its installation includes npm package manager
+
+
+Angular
+ - JavaScript package (installed via npm)
+ - Angular is a TypeScript-based, free and open-source single-page web application framework led by
+   the Angular Team at Google and by a community of individuals and corporations
+
+
+Ionic
+ - JavaScript package (installed via npm)
+ - An open source mobile UI toolkit for building modern, high quality cross-platform mobile apps
+   from a single code base in Angular, React or Vue
+
+
+Capacitor
+ - Capacitor is an open source native runtime for building Web Native apps. Create cross-platform
+   iOS, Android, and Progressive Web Apps with JavaScript, HTML, and CSS.
+ - It is a cross-platform native runtime for building mobile applications using web technologies.
+   Capacitor allows developers to use HTML, CSS, and JavaScript to create mobile apps that can
+   access native device features.
+ - It is from Ionic developers, so it has integration with Ionic cli
+
+
+native-run
+ - JavaScript package (installed via npm)
+ - cli commands to run apps on physical devices (Android and iOS)
+ - It is from Ionic developers, so it has integration with Ionic cli
+
+
+
+
+
+
+
+
+
+Basic usage instructions
+1. Install Ionic
+   $ npm install @ionic/cli native-run cordova-res
+2. Create project template (tabs)
+   $ ionic start energy-monitoring tabs --type=angular --capacitor --no-git
+3. Launch local web server
+   $ ionic serve
+4. Prepare project for Android deployment (generates the folder 'www' with all needed assets)
+   $ ionic build
+5. Create Android project
+   $ ionic cap add android
+6. Update Android project
+   $ ionic cap sync
+7. Open Android project with Android Studio
+   $ ionic cap open android

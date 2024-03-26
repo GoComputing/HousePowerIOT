@@ -1,0 +1,7 @@
+{
+  "name": "energy-monitoring",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
