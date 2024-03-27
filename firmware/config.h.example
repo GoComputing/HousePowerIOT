@@ -10,6 +10,8 @@
 
 // Sensor configuration
 #define SENSOR_LOCATION ""
+#define vCalibration 
+#define currCalibration 
 
 // Other configuration
 #define TZ_INFO ""

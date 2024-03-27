@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment'
 //   Observable implementation: https://angular.io/guide/observables-in-angular
 //   https://stackoverflow.com/questions/47236963/no-provider-for-httpclient
 //   On device debug: https://stackoverflow.com/questions/38744809/ionic-2-how-can-i-get-console-messages-from-android-device
+//   Allow http requests: https://stackoverflow.com/questions/75171259/android-virtual-device-error-this-request-has-been-blocked-the-content-must-be
 
 
 @Injectable({
