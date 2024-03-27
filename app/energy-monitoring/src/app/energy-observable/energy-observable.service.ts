@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { interval } from 'rxjs';
+import { timer } from 'rxjs';
 import { mergeMap, map } from 'rxjs/operators'
 import { secrets } from '../../environments/secrets'
 import { environment } from '../../environments/environment'
@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment'
 //   Observable/observer pattern: https://www.linkedin.com/pulse/observables-observer-rxjs-mithun-pal
 //   Observable implementation: https://angular.io/guide/observables-in-angular
 //   https://stackoverflow.com/questions/47236963/no-provider-for-httpclient
+//   On device debug: https://stackoverflow.com/questions/38744809/ionic-2-how-can-i-get-console-messages-from-android-device
 
 
 @Injectable({
@@ -36,7 +37,7 @@ export class EnergyObservable {
         const api_request = this._http.post(environment.influxdb_url, fluxQuery, { headers, responseType: 'text' })
             .pipe(map(response => this.csvJSON(response)));
 
-        const source = interval(period);
+        const source = timer(0, period);
         return source.pipe(
             mergeMap(value => {
                 return api_request;

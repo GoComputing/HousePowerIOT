@@ -23,7 +23,7 @@ export class Tab1Page implements AfterViewInit {
         this.gaugeChartMethod();
 
         this._energyobservable.getData(5000).subscribe(
-            response => { console.log(response[0]._value); },
+            response => { this.updateGaugeChart(response[0]._value); },
             error => { console.log(error) }
         );
     }
@@ -34,12 +34,9 @@ export class Tab1Page implements AfterViewInit {
             data: {
                 labels: ["Consumiendo", "Margen restante"],
                 datasets: [{
-                    label: 'Potencia actual (kW)',
-                    data: [70, 30],
-                    backgroundColor: [
-                        "rgb(235, 212, 120)",
-                        "rgb(80, 80, 80)"
-                    ]
+                    label: 'Potencia (kW)',
+                    data: [],
+                    backgroundColor: []
                 }]
             },
             options: {
@@ -47,5 +44,23 @@ export class Tab1Page implements AfterViewInit {
                 circumference: 180, // sweep angle in degrees
             }
         });
+    }
+
+    updateGaugeChart(value: number) {
+        const max_power = 4000;
+
+        if(value > max_power)
+            value = max_power;
+
+        this.gaugeChart.data.datasets = [{
+            label: 'Potencia (kW)',
+            data: [value, max_power-value],
+            backgroundColor: [
+                "rgb(235, 212, 120)",
+                "rgb(80, 80, 80)"
+            ]
+        }];
+        this.gaugeChart.options.animation = false;
+        this.gaugeChart.update();
     }
 }

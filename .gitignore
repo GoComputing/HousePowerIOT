@@ -6,5 +6,4 @@ hardware/pcb/main_board/fp-info-cache
 *.FCBak
 *.stl
 app/node_modules/
-app/energy-monitoring/android/
 app/energy-monitoring/src/environments/secrets.ts

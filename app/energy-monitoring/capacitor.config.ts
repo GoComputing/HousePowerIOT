@@ -5,7 +5,10 @@ const config: CapacitorConfig = {
   appName: 'energy-monitoring',
   webDir: 'www',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+  },
+  android: {
+    allowMixedContent: true
   }
 };
 
