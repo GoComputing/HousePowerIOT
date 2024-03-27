@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js/auto';
+import { EnergyObservable } from '../energy-observable/energy-observable.service';
 
 @Component({
   selector: 'app-tab1',
@@ -14,12 +15,17 @@ export class Tab1Page implements AfterViewInit {
 
     gaugeChart: any;
 
-    constructor() { }
+    constructor(private _energyobservable: EnergyObservable) { }
 
     // When we try to call our chart to initialize methods in ngOnInit() it shows an error nativeElement of undefined. 
     // So, we need to call all chart methods in ngAfterViewInit() where @ViewChild and @ViewChildren will be resolved.
     ngAfterViewInit() {
         this.gaugeChartMethod();
+
+        this._energyobservable.getData(5000).subscribe(
+            response => { console.log(response[0]._value); },
+            error => { console.log(error) }
+        );
     }
 
     gaugeChartMethod() {

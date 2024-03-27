@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  influxdb_url: 'http://192.168.1.120:8086/api/v2/query?org=Home&bucket=Sensors',
 };
 
 /*
