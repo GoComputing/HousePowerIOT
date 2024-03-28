@@ -13,6 +13,8 @@ export class Tab3Page implements AfterViewInit {
     @ViewChild('lineCanvas') private lineCanvas: ElementRef;
 
     lineChart: any;
+    lineChartData: number[];
+    lineChartLabels: number[];
 
     constructor() { }
 
@@ -26,10 +28,10 @@ export class Tab3Page implements AfterViewInit {
         this.lineChart = new Chart(this.lineCanvas.nativeElement, {
             type: 'line',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December'],
+                labels: this.lineChartLabels,
                 datasets: [
                     {
-                        label: 'Sell per week',
+                        label: 'Potencia consumida (W)',
                         fill: false,
                         // lineTension: 0.1,
                         backgroundColor: 'rgba(75,192,192,0.4)',
@@ -47,7 +49,7 @@ export class Tab3Page implements AfterViewInit {
                         pointHoverBorderWidth: 2,
                         pointRadius: 1,
                         pointHitRadius: 10,
-                        data: [65, 59, 80, 81, 56, 55, 40, 10, 5, 50, 10, 15],
+                        data: this.lineChartData,
                         spanGaps: false,
                     }
                 ]

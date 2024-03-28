@@ -21,7 +21,7 @@ export class EnergyObservable {
         
     }
 
-    getData(period: number) {
+    getDataFromQuery(query: string) {
         const authToken = secrets.influxdb_api_key;
 
         // Set up the headers
@@ -32,12 +32,29 @@ export class EnergyObservable {
 
         // Define the Flux query
         const fluxQuery = JSON.stringify({
-            query: "from(bucket:\"Sensors\") |> range(start: -1) |> filter(fn: (r) => r._field == \"power_W\") |> last()"
+            query: query
         });
 
         const api_request = this._http.post(environment.influxdb_url, fluxQuery, { headers, responseType: 'text' })
             .pipe(map(response => this.csvJSON(response)));
 
+        return api_request;
+    }
+
+    getData(start: string, sample_interval: string) {
+        const query = `from(bucket:\"Sensors\") |> range(start: ${start}) |> filter(fn: (r) => r._field == \"power_W\") |> aggregateWindow(every: ${sample_interval}, fn: mean, createEmpty: false)`;
+        const api_request = this.getDataFromQuery(query);
+        return api_request;
+    }
+
+    getLastData() {
+        const query = "from(bucket:\"Sensors\") |> range(start: -1) |> filter(fn: (r) => r._field == \"power_W\") |> last()";
+        const api_request = this.getDataFromQuery(query);
+        return api_request;
+    }
+
+    getPeriodicLastData(period: number) {
+        const api_request = this.getLastData();
         const source = timer(0, period);
         return source.pipe(
             mergeMap(value => {

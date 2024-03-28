@@ -22,7 +22,7 @@ export class Tab1Page implements AfterViewInit {
     ngAfterViewInit() {
         this.gaugeChartMethod();
 
-        this._energyobservable.getData(5000).subscribe(
+        this._energyobservable.getPeriodicLastData(5000).subscribe(
             response => { this.updateGaugeChart(response[0]._value); },
             error => { console.log(error) }
         );
@@ -34,7 +34,7 @@ export class Tab1Page implements AfterViewInit {
             data: {
                 labels: ["Consumiendo", "Margen restante"],
                 datasets: [{
-                    label: 'Potencia (kW)',
+                    label: 'Potencia (W)',
                     data: [],
                     backgroundColor: []
                 }]
@@ -53,7 +53,7 @@ export class Tab1Page implements AfterViewInit {
             value = max_power;
 
         this.gaugeChart.data.datasets = [{
-            label: 'Potencia (kW)',
+            label: 'Potencia (W)',
             data: [value, max_power-value],
             backgroundColor: [
                 "rgb(235, 212, 120)",

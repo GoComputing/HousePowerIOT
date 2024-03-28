@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js/auto';
+import { EnergyObservable } from '../energy-observable/energy-observable.service';
 
 @Component({
   selector: 'app-tab2',
@@ -13,8 +14,10 @@ export class Tab2Page implements AfterViewInit {
     @ViewChild('lineCanvas') private lineCanvas: ElementRef;
 
     lineChart: any;
+    lineChartData: number[];
+    lineChartLabels: number[];
 
-    constructor() { }
+    constructor(private _energyobservable: EnergyObservable) { }
 
     // When we try to call our chart to initialize methods in ngOnInit() it shows an error nativeElement of undefined. 
     // So, we need to call all chart methods in ngAfterViewInit() where @ViewChild and @ViewChildren will be resolved.
@@ -26,12 +29,12 @@ export class Tab2Page implements AfterViewInit {
         this.lineChart = new Chart(this.lineCanvas.nativeElement, {
             type: 'line',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December'],
+                labels: this.lineChartLabels,
                 datasets: [
                     {
-                        label: 'Sell per week',
+                        label: 'Potencia usada (W)',
                         fill: false,
-                        // lineTension: 0.1,
+                        tension: 0,
                         backgroundColor: 'rgba(75,192,192,0.4)',
                         borderColor: 'rgba(75,192,192,1)',
                         borderCapStyle: 'butt',
@@ -47,11 +50,29 @@ export class Tab2Page implements AfterViewInit {
                         pointHoverBorderWidth: 2,
                         pointRadius: 1,
                         pointHitRadius: 10,
-                        data: [65, 59, 80, 81, 56, 55, 40, 10, 5, 50, 10, 15],
+                        data: this.lineChartData,
                         spanGaps: false,
                     }
                 ]
             }
         });
+
+        this._energyobservable.getData('-1d', '30m').subscribe(
+            response => { this.updateLineChart(response) },
+            error => { console.log(error) }
+        );
+    }
+
+    updateLineChart(response: any[]) {
+        this.lineChartData = response.map(sample => sample._value);
+        this.lineChartLabels = response.map(sample => new Date(sample._time).getUTCHours());
+
+        this.lineChartData = this.lineChartData.filter(Boolean);
+        this.lineChartLabels = this.lineChartLabels.filter(sample => !isNaN(sample));
+
+        this.lineChart.data.labels = this.lineChartLabels;
+        this.lineChart.data.datasets[0].data = this.lineChartData;
+
+        this.lineChart.update();
     }
 }
